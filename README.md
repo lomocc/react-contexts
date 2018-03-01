@@ -7,8 +7,8 @@ react-contexts 组合工具
 ```js
 import {createContext, Providers, Consumers} from 'react-contexts';
 
-const { Provider: ThemeProvider, Consumer: ThemeConsumer } = createReactContext({theme: 'light'});
-const { Provider: LangProvider, Consumer: LangConsumer } = createReactContext({lang: 'en'});
+const { Provider: ThemeProvider, Consumer: ThemeConsumer } = createContext({theme: 'light'});
+const { Provider: LangProvider, Consumer: LangConsumer } = createContext({lang: 'en'});
 
 // (ThemeProvider -> (LangProvider -> (Fragment)))
 class App extends React.Component {
