@@ -1,57 +1,88 @@
 # react-contexts
 
-react-contexts 组合工具
+context is component
 
 ## Usage
 
 ```js
-import {createContext, Providers, Consumers} from 'react-contexts';
+import React, {Fragment} from "react";
+import {createContext} from "react-contexts";
 
-const { Provider: ThemeProvider, Consumer: ThemeConsumer } = createContext({theme: 'light'});
-const { Provider: LangProvider, Consumer: LangConsumer } = createContext({lang: 'en'});
+class ThemeComponent {
+  state = {
+    theme: 'light'
+  };
 
-// (ThemeProvider -> (LangProvider -> (Fragment)))
-class App extends React.Component {
+  toggleTheme() {
+    this.setState(state => ({
+      theme: state.theme === 'light' ? 'dark' : 'light'
+    }));
+  }
+}
+
+const ThemeContext = createContext(ThemeComponent);
+const ThemeContext2 = createContext(ThemeComponent);
+
+export default class extends React.Component {
   render() {
     return (
-      <Providers>
-        <ThemeProvider/>
-        <LangProvider/>
-        <Fragment>
-          <Consumers>
-            <ThemeConsumer/>
-            <LangConsumer/>
-            {
-              (themeContext, langContext) => {
-                return (
-                  <Fragment>
-                    <h1 style={{ color: themeContext.state.theme === 'light' ? '#000' : '#ccc' }}>
-                      lang: {langContext.state.lang}
-                    </h1>
-                    <button onClick={
+      <ThemeContext.Provider>
+        <ThemeContext2.Provider>
+          <React.Fragment>
+            <ThemeContext.Consumer>
+              <ThemeContext2.Consumer>
+                {
+                  (themeContext, themeContext2) => {
+                    return (
+                      <React.Fragment>
+                        <h1 style={{ color: themeContext.state.theme === 'light' ? '#000' : '#ccc' }}>
+                          theme: {themeContext.state.theme}
+                        </h1>
+                        <button onClick={
                       ()=>{
-                        themeContext.setState(state => ({
-                          theme: state.theme === 'light' ? 'dark' : 'light'
-                        }));
+                        themeContext.toggleTheme();
                       }}
-                    >Toggle theme</button>
-                    <button onClick={
+                        >Toggle theme</button>
+
+                        <h1 style={{ color: themeContext2.state.theme === 'light' ? '#000' : '#ccc' }}>
+                          theme2: {themeContext2.state.theme}
+                        </h1>
+                        <button onClick={
                       ()=>{
-                        langContext.setState(state => ({
-                          lang: state.lang === 'en' ? 'cn' : 'en'
-                        }));
+                        themeContext2.toggleTheme();
                       }}
-                    >
-                      Toggle lang
-                    </button>
-                  </Fragment>
-                )
+                        >Toggle theme2</button>
+                      </React.Fragment>
+                    )
+                  }
+                }
+              </ThemeContext2.Consumer>
+            </ThemeContext.Consumer>
+          </React.Fragment>
+          <React.Fragment>
+            <ThemeContext2.Consumer>
+              {
+                (themeContext2) => {
+                  return (
+                    <React.Fragment>
+                      <h1 style={{ color: themeContext2.state.theme === 'light' ? '#000' : '#ccc' }}>
+                        theme2: {themeContext2.state.theme}
+                      </h1>
+                      <button onClick={
+                      ()=>{
+                        themeContext2.toggleTheme();
+                      }}
+                      >Toggle theme2</button>
+                    </React.Fragment>
+                  )
+                }
               }
-            }
-          </Consumers>
-        </Fragment>
-      </Providers>
+            </ThemeContext2.Consumer>
+          </React.Fragment>
+        </ThemeContext2.Provider>
+      </ThemeContext.Provider>
     );
   }
 }
+
 ```

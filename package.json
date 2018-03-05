@@ -1,7 +1,7 @@
 {
   "name": "react-contexts",
   "version": "1.0.3",
-  "description": "",
+  "description": "context is component",
   "main": "index.js",
   "scripts": {
     "build": "babel src --out-dir lib"
