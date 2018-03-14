@@ -1,3 +1,3 @@
 var createContext = require('./lib/createContext');
 createContext.createContext = createContext;
-module.exports = require('./lib/createContext');
+module.exports = createContext;
