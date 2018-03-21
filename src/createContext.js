@@ -40,6 +40,17 @@ module.exports = function createContext(ContextComponent){
       this.__contextCopy = Object.create(context);
       this.__value = null;
     }
+    shouldComponentUpdate(nextProps, nextState){
+      if(this.__context.shouldComponentUpdate){
+        return this.__context.shouldComponentUpdate(nextProps, nextState);
+      }
+      return true;
+    }
+    componentWillReceiveProps(nextProps){
+      if(this.__context.componentWillReceiveProps){
+        this.__context.componentWillReceiveProps(nextProps);
+      }
+    }
     render(){
       this.__value = this.__value==this.__context?this.__contextCopy:this.__context; // value forceUpdate
       return (
