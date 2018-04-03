@@ -61,30 +61,31 @@ module.exports = function createContext(ContextComponent){
     }
   }
 
-  class Consumer extends React.Component {
-    static defaultProps = {
-      __contexts: []
-    };
-    render(){
-      let { children, __contexts } = this.props;
-      let consumerRender;
-      if(React.isValidElement(children)){
-        consumerRender = function(context) {
-          return React.cloneElement(children, {__contexts: __contexts.concat([context])});
-        };
-      }else{
-        consumerRender = function(context) {
-          return children.apply(null, __contexts.concat([context]));
-        };
-      }
-      return (
-        <Context.Consumer>{consumerRender}</Context.Consumer>
-      );
-    }
-  }
+  // class Consumer extends React.Component {
+  //   static defaultProps = {
+  //     __contexts: []
+  //   };
+  //   render(){
+  //     let { children, __contexts } = this.props;
+  //     let consumerRender;
+  //     if(React.isValidElement(children)){
+  //       consumerRender = function(context) {
+  //         return React.cloneElement(children, {__contexts: __contexts.concat([context])});
+  //       };
+  //     }else{
+  //       consumerRender = function(context) {
+  //         return children.apply(null, __contexts.concat([context]));
+  //       };
+  //     }
+  //     return (
+  //       <Context.Consumer>{consumerRender}</Context.Consumer>
+  //     );
+  //   }
+  // }
 
   return {
     Provider,
-    Consumer
+    // ComposedConsumer,
+    Consumer: Context.Consumer
   };
 };
