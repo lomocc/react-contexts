@@ -37,8 +37,6 @@ module.exports = function createContext(ContextComponent){
       this.state = initialState;
 
       this.__context = context;
-      this.__contextCopy = Object.create(context);
-      this.__value = null;
     }
     shouldComponentUpdate(nextProps, nextState){
       if(this.__context.shouldComponentUpdate){
@@ -52,9 +50,10 @@ module.exports = function createContext(ContextComponent){
       }
     }
     render(){
-      this.__value = this.__value==this.__context?this.__contextCopy:this.__context; // value forceUpdate
+      // Object.create(this.__context);
+      // value forceUpdate
       return (
-        <Context.Provider value={ this.__value }>
+        <Context.Provider value={ Object.create(this.__context) }>
           { this.props.children }
         </Context.Provider>
       );
