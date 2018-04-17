@@ -50,10 +50,9 @@ module.exports = function createContext(ContextComponent){
       }
     }
     render(){
-      // Object.create(this.__context);
-      // value forceUpdate
+      // value = {state, context}
       return (
-        <Context.Provider value={ Object.create(this.__context) }>
+        <Context.Provider value={{state: this.state, context: this.__context}}>
           { this.props.children }
         </Context.Provider>
       );
