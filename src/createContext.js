@@ -38,15 +38,30 @@ module.exports = function createContext(ContextComponent){
 
       this.__context = context;
     }
+    componentDidMount(){
+      if(this.__context.componentDidMount){
+        this.__context.componentDidMount();
+      }
+    }
     shouldComponentUpdate(nextProps, nextState){
       if(this.__context.shouldComponentUpdate){
         return this.__context.shouldComponentUpdate(nextProps, nextState);
       }
       return true;
     }
-    componentWillReceiveProps(nextProps){
-      if(this.__context.componentWillReceiveProps){
-        this.__context.componentWillReceiveProps(nextProps);
+    componentDidUpdate(prevProps, prevState){
+      if(this.__context.componentDidUpdate){
+        this.__context.componentDidUpdate(prevProps, prevState);
+      }
+    }
+    componentWillUnmount(){
+      if(this.__context.componentWillUnmount){
+        this.__context.componentWillUnmount();
+      }
+    }
+    componentDidCatch(error, info){
+      if(this.__context.componentDidCatch){
+        this.__context.componentDidCatch(error, info);
       }
     }
     render(){
