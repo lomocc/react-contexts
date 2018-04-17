@@ -1,6 +1,6 @@
 {
   "name": "react-contexts",
-  "version": "1.2.3",
+  "version": "1.2.4",
   "description": "context is component",
   "main": "index.js",
   "scripts": {
